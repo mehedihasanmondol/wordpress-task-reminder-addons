@@ -50,5 +50,46 @@ class TaskReminderPluginAssistant
         return $template_maker->render($html_form,$data);
     }
 
+    public function template_render($template, $data=array(
+        "message" => ""
+    )){
+       $template_maker = new Mustache_Engine(array(
+            'escape' => function($value) {
+                return $value;
+            }
+        ));
+        return $template_maker->render($template,$data);
+    }
+
+    function get_post_data($post_id){
+        $data = array(
+            "post_title" => "",
+            "post_name" => "",
+            "time" => "",
+            "task_date" => "",
+            "task_detail" => "",
+        );
+
+        $get_post = get_post($post_id);
+        if ($get_post){
+            $data['post_title'] = $get_post->post_title;
+            $data['post_name'] = $get_post->post_name;
+        }
+
+
+        foreach ((new TaskReminderAddOnsPluginConfig())->post_meta_keys as $key){
+            $value = get_post_meta($post_id,$key,true);
+            $data[$key] = $value ? $value : "";
+
+            if ($key == 'task_date'){
+                $data[$key] = $data[$key] ? date('Y-m-d', strtotime($data[$key])) : "";
+            }
+            
+        }
+
+
+        return $data;
+    }
+
 
 }

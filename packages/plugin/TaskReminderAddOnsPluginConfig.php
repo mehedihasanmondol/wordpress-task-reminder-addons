@@ -16,7 +16,7 @@ class TaskReminderAddOnsPluginConfig
     public $message_of_admin = "message of admin";
     public $subject_of_subscriber = "subject of subscriber";
     public $message_of_subscriber = "message of subscriber";
-    public $setup_hint = "You can add list of variables: {reciver_name},{task_title},{task_message},{task_date},{task_time}";
+    public $setup_hint = "You can add list of variables: {{post_title}},{{post_name}},{{task_date}},{{time}},{{task_detail}}";
 
 
     public $subject_of_admin_key = "subject_of_admin";
@@ -25,7 +25,9 @@ class TaskReminderAddOnsPluginConfig
     public $message_of_subscriber_key = "message_of_subscriber";
 
 
-
+    public $post_meta_keys = array(
+        "task_date","time","task_detail"
+    );
 
 
     public function __construct()

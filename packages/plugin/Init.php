@@ -100,13 +100,15 @@ class Init extends TaskReminderAddOnsPluginConfig
     }
     
     function send_email_to_admin() {
+
+        $assistant = new TaskReminderPluginAssistant();
         // Get the admin email
         $admin_email = get_option( 'admin_email' );
-    
-        // Email subject and message
-        $subject = 'Notification from Your Website';
-        $message = 'This is a test email sent to the admin.';
-    
+
+        $post_data = $assistant->get_post_data(intval( $_POST['post_id'] ));
+        $subject = $assistant->template_render($this->subject_of_admin,$post_data);
+        $message = $assistant->template_render($this->message_of_admin,$post_data);
+
     
         // Send the email
         return $this->send_custom_email( $admin_email, $subject, $message );
@@ -117,15 +119,18 @@ class Init extends TaskReminderAddOnsPluginConfig
        $is_error = 0;
        $post_id = intval( $_POST['post_id'] );
         $meta_values = get_post_meta( $post_id, 'staff', true );
+
+        $assistant = new TaskReminderPluginAssistant();
+
+        $post_data = $assistant->get_post_data(intval( $_POST['post_id'] ));
+        $subject = $assistant->template_render($this->subject_of_admin,$post_data);
+        $message = $assistant->template_render($this->message_of_admin,$post_data);
+
         foreach ($meta_values as $user_id){
             // Get user data
             $user_info = get_userdata( $user_id );
             if($user_info){
                 $user_email = $user_info->user_email;
-                // Email subject and message
-                $subject = 'Notification from Your Website';
-                $message = 'This is a test email sent to the subscriber.';
-    
                 // Send the email
                 if(!$this->send_custom_email( $user_email, $subject, $message )){
                     $is_error = 1;
