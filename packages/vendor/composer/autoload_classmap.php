@@ -10,11 +10,11 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'DummyUserCategoryRegister' => $baseDir . '/plugin/DummyUserCategoryRegister.php',
     'Init' => $baseDir . '/plugin/Init.php',
-    'NewsLetterPluginAssistant' => $baseDir . '/plugin/NewsLetterPluginAssistant.php',
-    'NewsLetterPluginConfig' => $baseDir . '/plugin/NewsLetterPluginConfig.php',
     'NewsLetterPluginCronJob' => $baseDir . '/plugin/NewsLetterPluginCronJob.php',
     'NewsLetterUnSubscriber' => $baseDir . '/plugin/NewsLetterUnSubscriber.php',
     'SendGrid' => $vendorDir . '/sendgrid/sendgrid/lib/SendGrid.php',
+    'TaskReminderAddOnsPluginConfig' => $baseDir . '/plugin/TaskReminderAddOnsPluginConfig.php',
+    'TaskReminderPluginAssistant' => $baseDir . '/plugin/TaskReminderPluginAssistant.php',
     'TwilioEmail' => $vendorDir . '/sendgrid/sendgrid/lib/TwilioEmail.php',
     'WPEditorToolConfig' => $baseDir . '/plugin/WPEditorToolConfig.php',
 );

@@ -1,8 +1,12 @@
 // SLIDERS SIMPLE-FADE
 // parámetros: (claseSlider, intervalo)
 jQuery(document).ready(function($) {
+
+    $(".notice-dismiss").click(function () {
+        $(this).closest(".notice.is-dismissible").remove();
+    })
+
     $('#submit-work-button').on('click', function() {
-        console.log("dkfdkfkdjf");
             $.ajax({
                 url: submitWorkAjax.ajax_url, // Use the localized AJAX URL
                 type: 'POST',
@@ -18,5 +22,7 @@ jQuery(document).ready(function($) {
                 }
             });
         });
+
+        
 
 });

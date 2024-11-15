@@ -6,20 +6,44 @@
  * Time: 10:35 AM
  */
 
-class Init
+class Init extends TaskReminderAddOnsPluginConfig
 {
     public function __construct() {
+        parent::__construct();
+        add_action("admin_menu",[$this,"add_setup_menu"]);
         add_filter( 'acf/load_value/name=task_detail', [ $this, 'add_button_after_acf_field' ], get_the_ID(), 3 );
         add_action( 'wp_ajax_submit_work_action', [$this,'handle_submit_work'] );
     }
 
     function add_button_after_acf_field( $value, $post_id, $field ) {
 
-        $this->load_newsletter_script();
+        $this->load_task_reminder_script();
         return $value;
     }
     
-    function load_newsletter_script(){
+    function custom_text_editor_meta_box_callback($field_name="",$content="") {
+        // Output the HTML for the meta box
+        new WPEditorToolConfig();
+        $settings = array(
+            'tinymce' => array(
+                'toolbar1' => 'bold,italic,underline,separator,numlist,bullist,forecolor,backcolor,image,hr,alignleft,aligncenter,alignright,separator,link,unlink,undo,redo,blockquote,spellchecker,fullscreen,custom_button', // Add your custom button here
+                'plugins' => 'custom_tinymce_plugin,lists,link,fullscreen,textcolor,image,hr', // Add your custom TinyMCE plugin name here
+            ),
+        );
+
+        $settings = array_merge($settings,array(
+            'textarea_name' => $field_name, // Name of the textarea field
+            'media_buttons' => true, // Show media buttons
+            'textarea_rows' => 15, // Number of rows in the editor
+        ));
+
+
+
+        wp_editor($content, 'newsletter_body', $settings);
+
+    }
+
+    function load_task_reminder_script(){
         
     
         wp_enqueue_script( 'task-reminder-addons-plugin-script',TASK_REMINDER_PLUGIN_DIR_URL."assets/task-reminder-addons-plugin.js",['jquery']);
@@ -115,6 +139,62 @@ class Init
         
     }
     
+    function setup_html(){
+        $html_form = file_get_contents(TASK_REMINDER_PLUGIN_DIR."/assets/html/setup.html");
+        $template_maker = new Mustache_Engine(array(
+            'escape' => function($value) {
+                return $value;
+            }
+        ));
+
+
+        $message = "";
+        if (isset($_REQUEST['save'])){
+            $update_1 = update_option($this->subject_of_admin_key,$_REQUEST['subject_of_admin']);
+            $update_2 = update_option($this->message_of_admin_key,$_REQUEST['message_of_admin']);
+            $update_3 = update_option($this->subject_of_subscriber_key,$_REQUEST['subject_of_subscriber']);
+            $update_4 = update_option($this->message_of_subscriber_key,$_REQUEST['message_of_subscriber']);
+            
+
+            $this->subject_of_admin = $_REQUEST['subject_of_admin'];
+            $this->message_of_admin = $_REQUEST['message_of_admin'];
+            $this->subject_of_subscriber = $_REQUEST['subject_of_subscriber'];
+            $this->message_of_subscriber = $_REQUEST['message_of_subscriber'];
+            if ($update_1 or $update_2 or $update_3 or $update_4){
+        
+                $message = (new TaskReminderPluginAssistant())->message_html_generate(array(
+                    "message" => "Changed has been saved."
+                ));
+            }
+            else{
+                $message = (new TaskReminderPluginAssistant())->message_html_generate(array(
+                    "message" => "Nothing has been changed."
+                ));
+            }
+        }
+
+        
+
+
+
+        echo $template_maker->render($html_form,array(
+            "subject_of_admin" => $this->subject_of_admin,
+            "message_of_admin" => $this->message_of_admin,
+            "subject_of_subscriber" => $this->subject_of_subscriber,
+            "message_of_subscriber" => $this->message_of_subscriber,
+            "setup_hint" => $this->setup_hint,
+            "message" => $message,
+        ));
+
+        return "";
+    }
+
+    function add_setup_menu(){
+        // $this->load_jquery_script();
+        $this->load_task_reminder_script();
+        add_menu_page($this->setup_page_title,$this->setup_menu_title,'manage_options',$this->setup_menu_slug,[$this,"setup_html"],'',null);
+    }
+
 
 
 }

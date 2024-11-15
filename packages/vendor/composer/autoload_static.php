@@ -72,11 +72,11 @@ class ComposerStaticInitb44a9b29498e482bd3c0e20f3341c378
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DummyUserCategoryRegister' => __DIR__ . '/../..' . '/plugin/DummyUserCategoryRegister.php',
         'Init' => __DIR__ . '/../..' . '/plugin/Init.php',
-        'NewsLetterPluginAssistant' => __DIR__ . '/../..' . '/plugin/NewsLetterPluginAssistant.php',
-        'NewsLetterPluginConfig' => __DIR__ . '/../..' . '/plugin/NewsLetterPluginConfig.php',
         'NewsLetterPluginCronJob' => __DIR__ . '/../..' . '/plugin/NewsLetterPluginCronJob.php',
         'NewsLetterUnSubscriber' => __DIR__ . '/../..' . '/plugin/NewsLetterUnSubscriber.php',
         'SendGrid' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/SendGrid.php',
+        'TaskReminderAddOnsPluginConfig' => __DIR__ . '/../..' . '/plugin/TaskReminderAddOnsPluginConfig.php',
+        'TaskReminderPluginAssistant' => __DIR__ . '/../..' . '/plugin/TaskReminderPluginAssistant.php',
         'TwilioEmail' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/TwilioEmail.php',
         'WPEditorToolConfig' => __DIR__ . '/../..' . '/plugin/WPEditorToolConfig.php',
     );
