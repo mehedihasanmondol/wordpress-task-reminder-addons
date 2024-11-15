@@ -184,6 +184,7 @@ class Init extends TaskReminderAddOnsPluginConfig
             "message_of_subscriber" => $this->message_of_subscriber,
             "setup_hint" => $this->setup_hint,
             "message" => $message,
+            "page_title" => $this->setup_page_title,
         ));
 
         return "";
