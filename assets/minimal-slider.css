@@ -1,0 +1,15 @@
+.slider {
+    position:relative;
+    width: 100%;
+    max-width:800px;
+    height:650px;
+    margin: 0 auto 5em auto;
+}
+.slider img {
+    border-radius: 16px;
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    max-width:800px;
+}

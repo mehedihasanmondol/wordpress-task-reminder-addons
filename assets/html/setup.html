@@ -1,0 +1,91 @@
+<div class="wrap">
+    {{message}}
+    <h1>{{page_title}}</h1>
+    <form action="" method="post">
+        <table class="form-table">
+            <tr>
+                <th><label for="api_key">SendGrid API Key</label></th>
+                <td>:</td>
+                <td>
+                    <input style="width: 100%" class="regular-text" type="text" id="api_key" name="api_key" value="{{api_key}}" />
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="from_email">From email</label></th>
+                <td>:</td>
+                <td>
+                    <input style="width: 100%" class="regular-text" type="text" id="from_email" name="from_email" value="{{from_email}}" />
+                </td>
+            </tr>
+            <tr>
+                <th><label for="from_email_name">From email name</label></th>
+                <td>:</td>
+                <td>
+                    <input style="width: 100%" class="regular-text" type="text" id="from_email_name" name="from_email_name" value="{{from_email_name}}" />
+                </td>
+            </tr>
+
+
+
+
+        </table>
+        <p class="submit">
+            <button class="button button-primary" name="save">Save</button>
+        </p>
+    </form>
+</div>
+
+<style>
+    .sendgrid_api_message {
+        background: #fff;
+        border: 1px solid #c3c4c7;
+        border-left-width: 4px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.04);
+        margin: 5px 15px 2px;
+        padding:10px 12px;
+        margin-top:50px;
+
+    }
+</style>
+
+<hr/>
+<div style="margin-top:100px">
+
+    <h4>Add a cron file into your server like this.</h4>
+    <table class="cron-command-table wp-list-table widefat striped table-view-list posts">
+        <tr>
+            <th><label>Minute</label></th>
+            <th><label>Hour</label></th>
+            <th><label>Day</label></th>
+            <th><label>Month</label></th>
+            <th><label>Weekday</label></th>
+            <th><label>Command</label></th>
+
+        </tr>
+        <tr>
+            <td>*/5</td>
+            <td>*</td>
+            <td>*</td>
+            <td>*</td>
+            <td>*</td>
+            <td>
+                {{cron_command}}
+            </td>
+        </tr>
+
+
+
+
+
+    </table>
+</div>
+
+
+
+<div class="sendgrid_api_message">
+    <span style="font-weight: bold">Last SendGrid api response</span><br>
+    {{send_grid_api_message}}
+</div>
+
+
