@@ -113,7 +113,7 @@ class Init extends TaskReminderAddOnsPluginConfig
         // Send the email
         return $this->send_custom_email( $admin_email, $subject, $message );
     }
-    
+                          
     function send_email_to_subscriber() {
         // Get the subscriber emails
        $is_error = 0;
@@ -123,8 +123,8 @@ class Init extends TaskReminderAddOnsPluginConfig
         $assistant = new TaskReminderPluginAssistant();
 
         $post_data = $assistant->get_post_data(intval( $_POST['post_id'] ));
-        $subject = $assistant->template_render($this->subject_of_admin,$post_data);
-        $message = $assistant->template_render($this->message_of_admin,$post_data);
+        $subject = $assistant->template_render($this->subject_of_subscriber,$post_data);
+        $message = $assistant->template_render($this->message_of_subscriber,$post_data);
 
         foreach ($meta_values as $user_id){
             // Get user data
