@@ -13,7 +13,29 @@ class Init extends TaskReminderAddOnsPluginConfig
         add_action("admin_menu",[$this,"add_setup_menu"]);
         add_filter( 'acf/load_value/name=task_detail', [ $this, 'add_button_after_acf_field' ], get_the_ID(), 3 );
         add_action( 'wp_ajax_submit_work_action', [$this,'handle_submit_work'] );
+        // add_action('transition_post_status', [$this, 'execute_after_task_publish'], 10, 3);
+
+        add_action('acf/save_post', [$this,'my_acf_save_post']);
+
     }
+
+    function my_acf_save_post( $post_id ) {
+        $this->send_email_to_subscriber($post_id);
+        
+    }
+
+
+    // public function execute_after_task_publish($new_status, $old_status, $post) {
+    //     // Check if the post type is 'task' and the status transitioned to 'publish' from another status
+    //     if ($post->post_type === 'task' && $new_status === 'publish' && $old_status !== 'publish') {
+    //         // Perform your custom action here
+    //         $post_id = $post->ID;
+
+    //         echo "post_id ".$post_id."<br>";
+    //         $this->send_email_to_subscriber($post_id);
+
+    //     }
+    // }
 
     function add_button_after_acf_field( $value, $post_id, $field ) {
 
@@ -66,10 +88,10 @@ class Init extends TaskReminderAddOnsPluginConfig
                 $is_error = 1;
             }
         
-            if(!$this->send_email_to_subscriber()){
-                // Return a response
-                $is_error = 1;
-            }
+            // if(!$this->send_email_to_subscriber()){
+            //     // Return a response
+            //     $is_error = 1;
+            // }
             if($is_error){
                 wp_send_json_error( 0 );
             }
@@ -114,18 +136,19 @@ class Init extends TaskReminderAddOnsPluginConfig
         return $this->send_custom_email( $admin_email, $subject, $message );
     }
                           
-    function send_email_to_subscriber() {
+    function send_email_to_subscriber($post_id) {
         // Get the subscriber emails
        $is_error = 0;
-       $post_id = intval( $_POST['post_id'] );
         $meta_values = get_post_meta( $post_id, 'staff', true );
 
         $assistant = new TaskReminderPluginAssistant();
-
-        $post_data = $assistant->get_post_data(intval( $_POST['post_id'] ));
+        $post_data = $assistant->get_post_data($post_id);
         $subject = $assistant->template_render($this->subject_of_subscriber,$post_data);
         $message = $assistant->template_render($this->message_of_subscriber,$post_data);
 
+        // print_r($meta_values);
+        // print_r($post_data);
+        // die();
         foreach ($meta_values as $user_id){
             // Get user data
             $user_info = get_userdata( $user_id );
