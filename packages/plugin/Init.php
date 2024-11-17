@@ -20,6 +20,11 @@ class Init extends TaskReminderAddOnsPluginConfig
     }
 
     function my_acf_save_post( $post_id ) {
+
+        ///crate work submission status
+        $assistant = new TaskReminderPluginAssistant();
+        $assistant->set_submission_status($post_id,"noOne",0);
+
         $this->send_email_to_subscriber($post_id);
         
     }
@@ -124,10 +129,16 @@ class Init extends TaskReminderAddOnsPluginConfig
     function send_email_to_admin() {
 
         $assistant = new TaskReminderPluginAssistant();
+
+        $post_id = intval( $_POST['post_id'] );
+
+        ///update work submission status for this logge staff
+        $assistant->set_submission_status($post_id,get_current_user_id());
+
         // Get the admin email
         $admin_email = get_option( 'admin_email' );
 
-        $post_data = $assistant->get_post_data(intval( $_POST['post_id'] ));
+        $post_data = $assistant->get_post_data($post_id);
         $subject = $assistant->template_render($this->subject_of_admin,$post_data);
         $message = $assistant->template_render($this->message_of_admin,$post_data);
 

@@ -91,5 +91,54 @@ class TaskReminderPluginAssistant
         return $data;
     }
 
+    
+    function get_post_submission_status_array($post_id){
+        $data = array(
+           
+        );
+        $staff_array = get_post_meta($post_id,'staff', true);
+        $before_submission_status_array = get_post_meta($post_id,'staff', true);
+        foreach($staff_array as $index => $staff_id){
+            $status = 0;
+            if($before_submission_status_array){
+                $status = $before_submission_status_array[$index];
+            }
+            $data[] = $status;
+
+        }
+        
+        return $data;
+    }
+
+    
+    function set_submission_status($post_id,$param_staff_id,$param_status = 1){
+        $data = array(
+           
+        );
+        $staff_array = get_post_meta($post_id,'staff', true);
+        $before_submission_status_array = get_post_meta($post_id,'staff_work_status', true);
+        foreach($staff_array as $index => $staff_id){
+            $status = 0;
+            if($before_submission_status_array){
+                $status = $before_submission_status_array[$index] ?? 0;
+            }
+
+            if($staff_id == $param_staff_id){
+                $status = $param_status;
+            }
+
+            $data[] = $status;
+
+        }
+
+        return update_post_meta($post_id, 'staff_work_status', $data);
+        
+    }
+    
+
+    
+
+
+
 
 }
