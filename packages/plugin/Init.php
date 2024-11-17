@@ -45,6 +45,25 @@ class Init extends TaskReminderAddOnsPluginConfig
     function add_button_after_acf_field( $value, $post_id, $field ) {
 
         $this->load_task_reminder_script();
+
+        $staff_work_status = get_post_meta($post_id,"staff_work_status",true);
+        $staff = get_post_meta($post_id,"staff",true);
+        $user_ID = get_current_user_id(); 
+        
+        foreach($staff as $index => $staff_id){
+            $work_status = $staff_work_status[$index] ?? 0;
+
+            
+            if($staff_id == $user_ID and $work_status){
+                
+                $mark = '<span style="border: 1px solid;padding: 2px;border-left: 5px solid;display:inline-block">Work submitted.</span><div></div>';
+            $value = $mark . $value;
+            }
+
+            
+        }
+
+
         return $value;
     }
     
