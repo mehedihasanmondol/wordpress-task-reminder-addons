@@ -131,6 +131,9 @@ class TaskReminderPluginAssistant
 
         }
 
+        if (!in_array(0, $data, true)) {
+            update_post_meta($post_id, 'task_status', 'completed');
+        }
         return update_post_meta($post_id, 'staff_work_status', $data);
         
     }
