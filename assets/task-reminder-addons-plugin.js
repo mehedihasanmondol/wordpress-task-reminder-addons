@@ -16,6 +16,7 @@ jQuery(document).ready(function($) {
                 },
                 success: function(response) {
                     alert('Work submitted successfully.');
+                    window.location.reload();
                 },
                 error: function() {
                     alert('There was an error submitting the work.');
