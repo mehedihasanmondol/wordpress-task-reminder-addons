@@ -1,6 +1,9 @@
-## **Task reminder addons**
+# Task reminder to admin and assigned people
+## Client requirement
+We have a task management plugin. need some customization and add some feature.
 
-GOAL,
+>1. add task calendar color depending on task status.
+>2. send emails to assigned people when create a task
+>3.  send email to admin when submit task
 
-A simple wordpress addons for task reminder and calendar update.
 
